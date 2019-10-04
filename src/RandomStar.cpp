@@ -38,7 +38,7 @@ RandomStar::~RandomStar() {
 
 void RandomStar::setInitialMomentum(const CFourVector& momentum) {
   _initialMomentum = momentum;
-  _m_n = sqrt(sqrt(_initialMomentum.getM2().real()));
+  _m_n = sqrt(_initialMomentum.getM2().real());
 }
 
 void RandomStar::generate() {
