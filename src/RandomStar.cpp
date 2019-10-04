@@ -70,7 +70,7 @@ void RandomStar::generate() {
     _p[km] = sqrt(w_k * w_k - tmp * tmp);
     eta_k = 2 * _rnd.Rndm() - 1;
     phi_k = 2 * M_PI * _rnd.Rndm();
-    tmp = sqrt(1 - eta_k * eta_k);    
+    tmp = sqrt(1 - eta_k * eta_k);
     _momenta[km][0] = _p[km] * tmp * cos(phi_k);
     _momenta[km][1] = _p[km] * tmp * sin(phi_k);
     _momenta[km][2] = _p[km] * eta_k;
@@ -80,7 +80,7 @@ void RandomStar::generate() {
 		       p4_k.getZ() * _momenta[km][2]) / m_k;
     tmp = (_momenta[km][3].real() + w_k) / (p4_k.getE().real() + m_k);
     for (int i = 0; i < 3; ++i) {
-      _momenta[km][i] += tmp * p4_k[i];
+      _momenta[km][i] += p4_k[i] * tmp;
     }
     p4_k -= _momenta[km];
     m_k = m_km;
