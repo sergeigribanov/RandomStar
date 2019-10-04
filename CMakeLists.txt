@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
-project(RandomStar)
+project(RndStar)
 option(MEUTILS_DIR "Matrix Element Utils instalation path")
 if (NOT MEUTILS_DIR)
   if (DEFINED ENV{MEUTILS_DIR})
@@ -12,13 +12,13 @@ endif()
 find_package(GSL REQUIRED)
 find_package(ROOT REQUIRED COMPONENTS RIO Net Core Eve EG Geom Ged RGL)
 include(${ROOT_USE_FILE})
-
 link_directories(${MEUTILS_DIR}/lib)
 file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp)
 file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 file(GLOB SOURCES_NOMAIN ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
 list(REMOVE_ITEM SOURCES_NOMAIN main.cpp)
 set(PUBLIC_HEADERS ${HEADERS})
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/rndstar-setup.sh.in rndstar-setup.sh)
 add_executable(rstar-test ${SOURCES})
 target_include_directories(rstar-test
   PRIVATE
@@ -42,13 +42,11 @@ target_link_libraries(rstar
   GSL::gsl
   GSL::gslcblas
   ${ROOT_LIBRARIES})
-
 set_target_properties(rstar
   PROPERTIES
   PUBLIC_HEADER "${PUBLIC_HEADERS}")
-
 install(TARGETS rstar-test DESTINATION bin)
-
 install(TARGETS rstar
   LIBRARY DESTINATION lib
   PUBLIC_HEADER DESTINATION include)
+install(FILES ${PROJECT_BINARY_DIR}/rndstar-setup.sh DESTINATION env)
