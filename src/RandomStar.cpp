@@ -26,7 +26,7 @@ RandomStar::~RandomStar() {
   }
   for (auto& el : _splines) {
     if (el.second.first) {
-      delete el.second.first;
+      gsl_spline_free(el.second.first);
     }
     if (el.second.second) {
       delete [] el.second.second;
@@ -95,7 +95,7 @@ void RandomStar::evalPhaseSpace() {
     pow(_t[_n - 1], 1.5 * _n - 2.5) /
     _m_n / gsl_sf_gamma(1.5 * (_n - 1));
   for (int i = 1; i < _n; ++i) {
-    _phspace *= _p[i] / (_t[i] - _t[i - 1]);
+    _phspace *= _p[i] / sqrt(_t[i] - _t[i - 1]);
   }
 }
 
@@ -132,4 +132,8 @@ const std::vector<CFourVector>& RandomStar::getMomenta() const {
 
 double RandomStar::getPhaseSpace() const {
   return _phspace;
+}
+
+TRandom& RandomStar::getRndGen() {
+  return _rnd;
 }

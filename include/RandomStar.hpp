@@ -18,6 +18,7 @@ public:
   void generate();
   const std::vector<CFourVector>& getMomenta() const;
   double getPhaseSpace() const;
+  TRandom& getRndGen();
   void setInitialMomentum(const CFourVector&);
 private:
   double evalRoot(double, int);
