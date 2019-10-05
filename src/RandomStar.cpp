@@ -1,4 +1,3 @@
-#include <iostream>
 #include <algorithm>
 #include <gsl/gsl_sf.h>
 #include "RandomStar.hpp"
